@@ -1,8 +1,8 @@
-# DoLocal — Local Services Marketplace (Engineering Showcase)
+# DoLocal:Local Services Marketplace (Engineering Showcase)
 
-> **Active development — not production-ready.** This showcase describes engineering work in a private development repository. It does not claim a live deployment, production payment processing, complete financial operations, full test coverage, or commercial launch.
+> **Active development: not production-ready.** This showcase describes engineering work in a private development repository. It does not claim a live deployment, production payment processing, complete financial operations, full test coverage, or commercial launch.
 
-DoLocal is a Botswana-focused local-services marketplace built around service discovery, service requests, provider quotes, orders, fulfillment, and payment lifecycle workflows. Initial market scope uses BWP, English, and the Africa/Gaborone timezone.
+DoLocal is a Botswana-focused local services marketplace built around service discovery, service requests, provider quotes, orders, fulfillment, and payment lifecycle workflows. Initial market scope uses BWP, English, and the Africa/Gaborone timezone.
 
 The development repository is a modular monolith (not microservices): a FastAPI backend owns validation, authorization, lifecycle transitions, and persistence, with separate Next.js customer/provider and back-office applications consuming it over HTTP. Client-side validation supports usability but is never treated as a security boundary.
 
@@ -57,10 +57,10 @@ Main request flow:
 
 Responsibilities:
 
-- `apps/api` — authoritative business rules, validation, authorization, lifecycle transitions, persistence.
-- `apps/web` — customer and provider workflows (plus transitional `/admin/*` pages pending full cutover).
-- `apps/admin` — authoritative back-office workflows: dashboard, providers, services, orders, cancellations, communication reports, reconciliation queue, audit trail.
-- `apps/mobile` — Expo client; still the default starter screen with no DoLocal API integration. Post-MVP.
+- `apps/api`  : authoritative business rules, validation, authorization, lifecycle transitions, persistence.
+- `apps/web` : customer and provider workflows (plus transitional `/admin/*` pages pending full cutover).
+- `apps/admin` : authoritative back-office workflows: dashboard, providers, services, orders, cancellations, communication reports, reconciliation queue, audit trail.
+- `apps/mobile` : Expo client; still the default starter screen with no DoLocal API integration. Post-MVP.
 
 
 ## 3. Technology stack
@@ -152,9 +152,9 @@ Approach: application services depend only on the `PaymentProvider` protocol (ch
 
 Evidence: `apps/api/src/api/payments/provider.py`, `apps/api/src/api/payments/fake.py`, `apps/api/src/api/routers/payments.py`, `apps/api/src/api/services/payment_lifecycle.py`.
 
-### Admin operations, reported-content review, and auditability
+### Admin operations, reported content review, and auditability
 
-Problem: back-office actions need privileged reads and writes with a traceable record, without duplicating business rules in the client.
+Problem: back office actions need privileged reads and writes with a traceable record, without duplicating business rules in the client.
 
 Approach: admin routers expose paginated provider, service, offering, and order views, provider activation, fulfillment assignment, cancellation queue and decision, communication-report review, reconciliation queue, and audit-event listing. The API enforces the admin claim on every protected read and write; the admin app adds a sign-in gate, safe return targets, unauthorized handling, and typed API clients. Cancellation decisions and report reviews write audit events.
 
@@ -396,10 +396,6 @@ Requires confirmation: the API start command above is inferred from the code lay
 - Payments use `FakePaymentProvider`; no live PSP integration is claimed. Non-fake provider values fail closed.
 - Refund, payout, and settlement execution are not complete; related models exist but further money movement is not established.
 - Reconciliation is a read-only queue of flagged webhook events; resolution workflows are not fully implemented.
-- Browser end-to-end coverage and full financial lifecycle verification remain open; historical test notes are not current-run evidence.
-- The mobile app is a starter screen and is not integrated with the DoLocal API.
-- Deployment infrastructure and production readiness have not been established (no Dockerfile, compose, or deploy workflow found; CI covers lint/typecheck only).
-
 This project is not production-ready, deployed, fully tested, or commercially launched.
 
 ## 10. My engineering contribution
